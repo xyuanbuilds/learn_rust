@@ -5,18 +5,48 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // test run in test_repo
       "type": "lldb",
       "request": "launch",
-      "name": "Cargo test",
+      "name": "Test run",
+      "args": [],
+      "cwd": "${workspaceFolder}",
       "cargo": {
         "args": [
           "test",
           "--no-run",
-          "--lib"
-        ]
+          "--lib",
+          "--manifest-path=test_repo/Cargo.toml"
+        ],
+        "filter": {
+          "name": "test_repo",
+          "kind": "lib"
+        }
       },
-      "program": "${cargo:program}",
-      "args": []
     },
+    {
+      // need cargo build first
+      "name": "(OSX) Launch after build",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceRoot}/target/debug/${workspaceFolderBasename}",
+      "args": [],
+      "cwd": "${workspaceRoot}",
+      "sourceLanguages": [
+        "rust"
+      ]
+    },
+    {
+      // need extension C/C++
+      "name": "(Windows) Launch after build",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceRoot}/target/debug/learn_rust.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceRoot}",
+      "environment": [],
+      "externalConsole": true
+    }
   ]
 }
