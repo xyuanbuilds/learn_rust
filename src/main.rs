@@ -1,6 +1,9 @@
+pub mod ownership_test;
+mod sourcemap_test;
 pub mod struct_test;
 
-fn main() {
+use std::io;
+fn main() -> io::Result<()> {
     println!("Hello, world!");
     let x = 5;
     const X1: i32 = 5; // 常量必须定义类型，且尽量全大写
@@ -26,6 +29,38 @@ fn main() {
     let array_test1 = [2; 3]; // 长度为3，3个元素都为2
     let vector_test: Vec<i32> = vec![1, 2, 3, 45]; // 长度可变使用 vector
     println!("{} {} {}", array_test[1], array_test1[1], vector_test[1]);
+
+    // 1 1 2 3 5 8 13 ...
+    fn fibonacci(n: i32) {
+        let mut x = 0;
+        let mut y = 1;
+        let mut z = x + y;
+        // println!("begin: {} {}", x, 0);
+        // range 用法，常用于数值遍历及遍历中取数
+        for num in 1..n {
+            x = y;
+            y = z;
+            z = x + y;
+            println!("{} {}", x, num);
+        }
+    }
+    fibonacci(10);
+
+    use sourcemap::SourceMap;
+    use std::fs::File;
+    use std::io::prelude::*;
+    use std::path::Path;
+
+    let p = Path::new("src/test.map");
+
+    println!("path: {:?}", p);
+    let mut f = File::open(p)?;
+
+    let mut buffer = Vec::new();
+    // read the whole file
+    f.read_to_end(&mut buffer)?;
+    println!("token: {:#?}", buffer);
+    Ok(())
 }
 
 #[cfg(test)]
