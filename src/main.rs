@@ -1,4 +1,5 @@
-pub mod ownership_test;
+pub mod control_flow_test;
+mod reference_test;
 mod sourcemap_test;
 pub mod struct_test;
 

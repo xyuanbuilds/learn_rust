@@ -12,6 +12,7 @@ impl Rectangle {
     }
 }
 // 相当于一个构造函数
+// 也可定义在 impl 结构内，用 new
 pub fn r_c(width: u32, height: u32) -> Rectangle {
     Rectangle { width, height }
 }
@@ -58,3 +59,62 @@ mod tests {
         assert!(!smaller.can_hold(&larger));
     }
 }
+
+#[derive(Debug, PartialEq)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+// impl Point<u16> {
+//     // new 关联函数相当于 构造函数
+//     fn new(x: u16, y: u16) -> Self {
+//         Point { x, y }
+//     }
+
+//     // 方法
+//     // 可变 self 也必须
+//     fn change(&mut self, x: u16, y: u16) {
+//         self.x = x;
+//         self.y = y;
+//     }
+
+//     // 关联函数
+//     fn area(&self) -> u16 {
+//         self.x * self.y
+//     }
+// }
+
+// #[test]
+// fn test_point_u16() {
+//     let mut a = Point::new(100, 100);
+//     assert!(a.area() == 10000);
+//     a.change(2, 2);
+//     assert!(a.area() == 4);
+// }
+
+trait Add<R = Self> {
+    type Out; // 关联类型
+    fn add(self, rhs: R) -> Self::Out;
+}
+
+// 一个文件中一个 struct 只能 impl 一次
+impl<T> Point<T> {
+    fn new(x: T, y: T) -> Self {
+        Point { x, y }
+    }
+}
+
+// type T = u32 + i16;
+// impl Add for Point<T> {
+//     type Out = T;
+//     fn add(self, rhs: Self) -> Self::Out {
+//         self.x + rhs.x
+//     }
+// }
+// impl Add for Point<u32> {
+//     type Out = u32;
+//     fn add(self, rhs: Self) -> Self::Out {
+//         self.x + rhs.x
+//     }
+// }
