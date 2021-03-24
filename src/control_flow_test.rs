@@ -47,8 +47,8 @@ fn test1() {
     for_range_test(0);
 }
 
-/// enum的每一项需要定义名称及值类型 名称(值类型)
-/// 也可以单名称，不含值，这时候就相当于只是一个判断标识
+/// enum的每一项需要定义 名称/标签 及值类型 标签(值类型)
+/// 也可以 单标签，不含值，这时候就相当于只是一个判断 标签
 #[derive(Debug)]
 enum ReturnType {
     Pair((i32, i32)),
@@ -80,7 +80,7 @@ fn test_data(param: Option<u8>) -> ReturnType {
 ///
 /// Guards: 一般用于结构后，相当于提取后能再进行表达式计算对返回值验证，多过滤一次；
 ///
-/// Binding: @ 相当于一个占位效果，占位提取出当前匹配的值，并赋予左侧变量名，间接访问变量，使得当前分支能获取 值 的变量；
+/// Binding: @ 相当于一个占位效果，占位提取出当前匹配的值，并绑定给左侧变量名，间接访问变量，使得当前分支能获取值；
 fn match_test(num: u8) {
     let res = test_data(Some(num));
     // TODO ^ Try different values for `pair`
