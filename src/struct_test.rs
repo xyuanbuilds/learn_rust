@@ -7,6 +7,9 @@ pub struct Rectangle {
 
 // impl 定义方法
 impl Rectangle {
+    pub fn new(width: u32, height: u32) -> Self {
+        Self { width, height }
+    }
     pub fn can_hold(&self, other: &Rectangle) -> bool {
         self.width < other.width && self.height > other.height
     }
@@ -118,3 +121,42 @@ impl<T> Point<T> {
 //         self.x + rhs.x
 //     }
 // }
+
+struct MyStruct {
+    text: &'static str,
+    number: u32,
+}
+
+impl MyStruct {
+    fn new(text: &'static str, number: u32) -> MyStruct {
+        MyStruct {
+            text: text,
+            number: number,
+        }
+    }
+
+    // We have to specify that 'self' is an argument.
+    fn get_number(&self) -> u32 {
+        self.number
+    }
+
+    // We can specify different kinds of ownership and mutability of self.
+    fn inc_number(&mut self) {
+        self.number += 1;
+    }
+
+    // There are three different types of 'self'
+    fn destructor(self) {
+        println!("Destructing {}", self.text);
+    }
+}
+
+#[test]
+fn test_self() {
+    let obj = MyStruct {
+        text: "dddd",
+        number: 222,
+    };
+
+    println!("{}", obj.get_number() == MyStruct::get_number(&obj));
+}
