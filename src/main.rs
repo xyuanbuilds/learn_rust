@@ -1,3 +1,4 @@
+pub mod closure_test;
 pub mod control_flow_test;
 pub mod hashmap_test;
 mod reference_test;
